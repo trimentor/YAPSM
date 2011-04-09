@@ -83,16 +83,24 @@
             },
 
             strength: function(password) {
-                var entropyOfCharSet;
-                var bits;
+                var strength;
                 var dictionaryWord = this.commonWord(password);
 
                 if (!dictionaryWord) {
-                    entropyOfCharSet = Math.log(this.numberOfPossibleSymbols(password)) / Math.log(2);
-                    bits = entropyOfCharSet * password.length;
+                    var bits = this.passwordStrength(password);
                 }
 
-                return bits;
+                return strength;
+            },
+
+            charSetEntropy: function(charSet) {
+                return Math.log(charSet) / Math.log(2);
+            },
+
+            passwordStrength: function(password) {
+                var charSet = this.numberOfPossibleSymbols(password);
+
+                return this.charSetEntropy(charSet) * password.length;
             },
 
             commonWord: function(password) {
