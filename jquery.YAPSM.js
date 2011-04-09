@@ -14,7 +14,15 @@
     };
 
     $.extend($.yapsm, {
-        defaults: {},
+        defaults: {
+            fieldClass: 'yapsm',
+            shortClass: 'too-short',
+            weakClass: 'weak',
+            fairClass: 'fair',
+            goodClass: 'good',
+            strongClass:'strong',
+            veryStrongClass: 'very-strong'
+        },
 
         prototype: {
             init: function() {}
