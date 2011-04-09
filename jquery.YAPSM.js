@@ -26,7 +26,8 @@
             fairClass: 'fair',
             goodClass: 'good',
             strongClass:'strong',
-            veryStrongClass: 'very-strong'
+            veryStrongClass: 'very-strong',
+            commonWordClass: 'dictionary-word'
         },
 
         entropyMap: {
@@ -83,14 +84,10 @@
             },
 
             strength: function(password) {
-                var strength;
                 var dictionaryWord = this.commonWord(password);
+                var bits = !dictionaryWord ? this.passwordStrength(password) : null;
 
-                if (!dictionaryWord) {
-                    var bits = this.passwordStrength(password);
-                }
-
-                return strength;
+                return this.strengthClass(bits);
             },
 
             charSetEntropy: function(charSet) {
@@ -146,6 +143,33 @@
                 }
 
                 return score;
+            },
+
+            strengthClass: function(bits) {
+                var cssClass;
+
+                if (bits == null) {
+                    cssClass = this.settings.commonWordClass
+                }
+                else {
+                    if (bits >= 28 && bits <= 35) {
+                        cssClass = this.settings.fairClass;
+                    }
+                    else if (bits >= 36 && bits <= 59) {
+                        cssClass = this.settings.goodClass;
+                    }
+                    else if (bits >= 60 && bits <= 127) {
+                        cssClass = this.settings.strongClass;
+                    }
+                    else if (bits >= 128) {
+                        cssClass = this.settings.veryStrongClass;
+                    }
+                    else {
+                        cssClass = this.settings.weakClass;
+                    }
+                }
+
+                return cssClass;
             }
         }
     });
