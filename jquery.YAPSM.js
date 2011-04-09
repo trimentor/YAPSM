@@ -78,7 +78,34 @@
 
             commonWord: function(password) {},
 
-            numberOfPossibleSymbols: function(password) {}
+            numberOfPossibleSymbols: function(password) {
+                var character;
+                var score = 0;
+                var inclDecimal, inclLowerCase, inclUpCase, inclOther;
+
+                for (var i=0; i<password.length; i++) {
+                    character = password.charAt(i);
+
+                    if (typeof(inclDecimal) == 'undefined' && /[0-9]/.test(character)) {
+                        inclDecimal = true;
+                        score += this.entropyMap.decimal.count;
+                    }
+                    if (typeof(inclUpCase) == 'undefined' && /[A-Z]/.test(character)) {
+                        inclUpCase = true;
+                        score += this.entropyMap.mixedCaseLettersOnly.count;
+                    }
+                    if (typeof(inclLowerCase) == 'undefined' && /[a-z]/.test(character)) {
+                        inclLowerCase = true;
+                        score += this.entropyMap.mixedCaseLettersOnly.count;
+                    }
+                    if (typeof(inclOther) == 'undefined' && "`~-_=+[{]}\\|;:'\",<.>/?!@#$%^&*()".indexOf(character) >= 0) {
+                        inclOther = true;
+                        score += this.entropyMap.otherCharacters.count;
+                    }
+                }
+
+                return score;
+            }
         }
     });
 })(jQuery);
