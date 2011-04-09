@@ -61,14 +61,33 @@
         },
 
         prototype: {
-            init: function() {},
+            init: function() {
+                this.commonWords(this.settings.dictionary);
+            },
+
+            commonWords: function(dictionary) {
+                var commonList;
+                var dictionaryType = typeof(dictionary);
+
+                if (dictionaryType == 'function') {
+                    // TODO
+                }
+                else if (dictionaryType == 'object') {
+                    commonList = dictionary;
+                }
+                else {
+                    commonList = new Array();
+                }
+
+                this.dictionary = commonList;
+            },
 
             strength: function(password) {
                 var entropyOfCharSet;
                 var bits;
                 var dictionaryWord = this.commonWord(password);
 
-                if (dictionaryWord != false) {
+                if (!dictionaryWord) {
                     entropyOfCharSet = Math.log(this.numberOfPossibleSymbols(password)) / Math.log(2);
                     bits = entropyOfCharSet * password.length;
                 }
@@ -76,7 +95,21 @@
                 return bits;
             },
 
-            commonWord: function(password) {},
+            commonWord: function(password) {
+                var lPassword = password.toLowerCase();
+                var dictionaryWord = false;
+
+                for (var i=0; i<this.dictionary.length; i++) {
+                    var commonWord = this.dictionary[i].toLowerCase();
+
+                    if (lPassword == commonWord) {
+                        dictionaryWord = true;
+                        break;
+                    }
+                }
+
+                return dictionaryWord;
+            },
 
             numberOfPossibleSymbols: function(password) {
                 var character;
