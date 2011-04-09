@@ -56,7 +56,8 @@
                 entropy: 5.95
             },
             otherCharacters: {
-                count: 94,
+                //count: 94,
+                count: 1,
                 entropy: 6.55
             }
         },
@@ -170,6 +171,19 @@
                 }
 
                 return cssClass;
+            },
+
+            passwordGuesses: function(bits, feelingLucky) {
+                var nBits = !!feelingLucky ? bits-1 : bits;
+
+                return Math.pow(2, nBits);
+            },
+
+            timeToGuess: function(passwordGuesses) {
+                var averagePassPerSec = Math.pow(10, 9)*3;
+                var seconds = Math.floor(passwordGuesses)/averagePassPerSec;
+
+                return [seconds, seconds*60, seconds*3600];
             }
         }
     });
