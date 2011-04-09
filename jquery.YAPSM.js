@@ -3,6 +3,10 @@
         yapsm: function(options) {
             var passwordStrengthMeter = new $.yapsm(options);
 
+            $(this).keyup(function() {
+                var strength = passwordStrengthMeter.strength(this.value);
+            });
+
             return this;
         }
     });
@@ -57,7 +61,24 @@
         },
 
         prototype: {
-            init: function() {}
+            init: function() {},
+
+            strength: function(password) {
+                var entropyOfCharSet;
+                var bits;
+                var dictionaryWord = this.commonWord(password);
+
+                if (dictionaryWord != false) {
+                    entropyOfCharSet = Math.log(this.numberOfPossibleSymbols(password)) / Math.log(2);
+                    bits = entropyOfCharSet * password.length;
+                }
+
+                return bits;
+            },
+
+            commonWord: function(password) {},
+
+            numberOfPossibleSymbols: function(password) {}
         }
     });
 })(jQuery);
