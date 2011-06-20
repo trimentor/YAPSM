@@ -2,10 +2,11 @@
     $.extend($.fn, {
         yapsm: function(options) {
             var passwordStrengthMeter = new $.yapsm(options);
-
-            $(this).keyup(function() {
+            var calculatePasswordComplexity = function() {
                 this.complexity = passwordStrengthMeter.strength(this.value);
-            });
+            };
+
+            $(this).keyup(calculatePasswordComplexity);
 
             return this;
         }
