@@ -14,13 +14,17 @@
             <fielset>
                 <input id="user_name" name="user[name]" />
                 <input id="user_password" name="user[password]" type="password" />
-                <input name="commit" type="submit" />
+                <input name="commit" type="submit" disabled="disabled" />
             </fielset>
         </form>
+        
+        <div id="password_complexity"></div>
         <script>
             $("#user_password").yapsm({
-                watch: '#user_name',
                 dictionary: ["admin", "admin123"]
+            })
+            .keyup(function() {
+                $("#password_complexity").html(this.complexity);
             });
         </script>
     </body>
