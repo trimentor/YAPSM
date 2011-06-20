@@ -4,7 +4,7 @@
             var passwordStrengthMeter = new $.yapsm(options);
 
             $(this).keyup(function() {
-                var strength = passwordStrengthMeter.strength(this.value);
+                this.complexity = passwordStrengthMeter.strength(this.value);
             });
 
             return this;
