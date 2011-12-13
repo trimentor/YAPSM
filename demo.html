@@ -5,20 +5,84 @@
         <title>Yet Another Password Strength Meter - Demo</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script src="jquery.YAPSM.js"></script>
+
+        <style type="text/css">
+            body {
+                color: #404040;
+                font-family: "Helvetica Neue", Helvetica,Arial, sans-serif;
+                font-size: 13px;
+                font-weight: normal;
+                line-height: 18px;
+            }
+
+            fieldset {
+                border: 0 none;
+                margin: 0;
+                padding: 0;
+            }
+
+            ol {
+                margin: 0;
+                padding: 0;
+            }
+            li {
+                list-style: none outside;
+            }
+
+            .input {
+                line-height: 18px;
+                margin-bottom: 18px;
+            }
+            .input input {
+                border: 1px solid #CCC;
+                border-radius: 3px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) inset;
+                font-size: 13px;
+                padding: 4px;
+            }
+
+            .xlarge input {
+                font-size: 18px;
+                height: 26px;
+                padding: 8px 6px;
+            }
+            .xlarge {
+                line-height: 26px;
+            }
+
+            .sidetip {
+                display: inline-block;
+                margin: 0;
+                padding-left: 5px;
+            }
+        </style>
     </head>
     <body>
         <h1>Yet Another Password Strength Meter</h1>
         <h2>Demo</h2>
 
-        <form>
-            <fieldset>
-                <input id="user_name" name="user[name]" />
-                <input id="user_password" name="user[password]" type="password" />
-                <input name="commit" type="submit" disabled="disabled" />
+        <form class="form-stacked">
+            <fieldset class="inputs">
+                <ol>
+                    <li class="string input stringish xlarge">
+                        <input id="user_name" name="user[name]" type="text" placeholder="Enter your username" />
+                    </li>
+                    <li class="password input stringish xlarge">
+                        <input id="user_password" name="user[password]" type="password" placeholder="Enter your password" />
+                        <p id="password_complexity" class="inline-hints sidetip"></p>
+                    </li>
+                </ol>
+            </fieldset>
+
+            <fieldset class="buttons">
+                <ol>
+                    <li class="button">
+                        <input name="commit" type="submit" disabled="disabled" value="Submit" />
+                    </li>
+                </ol>
             </fieldset>
         </form>
-        
-        <div id="password_complexity"></div>
+
         <script>
             $("#user_password").yapsm({
                 dictionary: ["admin", "admin123"]
