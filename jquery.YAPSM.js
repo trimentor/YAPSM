@@ -79,7 +79,7 @@
                 var dictionaryType = typeof(dictionary);
 
                 if (dictionaryType == 'function') {
-                    // TODO
+                    commonList = dictionary();
                 }
                 else if (dictionaryType == 'object') {
                     commonList = dictionary;

@@ -85,7 +85,9 @@
 
         <script>
             $("#user_password").yapsm({
-                dictionary: ["admin", "admin123"]
+                dictionary: function() {
+                    return ["admin", "test"];
+                }
             })
             .keyup(function() {
                 $("#password_complexity").html(this.complexity);
