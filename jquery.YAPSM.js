@@ -1,7 +1,7 @@
 /*!
  * jquery.YAPSM.js
  *
- * Copyright 2011, Kjel Delaey (https://github.com/trimentor/YAPSM)
+ * Copyright 2012, Kjel Delaey (https://github.com/trimentor/YAPSM)
  * https://github.com/trimentor/YAPSM/blob/master/LICENSE
  */
 (function ($) {
