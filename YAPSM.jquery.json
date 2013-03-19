@@ -4,7 +4,7 @@
   "description": "Take no risk and help your users to choose good passwords!",
   "homepage": "https://github.com/trimentor/YAPSM",
   "keywords": ["yapsm", "password", "strength", "complexity", "security", "time", "measure", "meter", "validation", "check"],
-  "version": "0.1.2",
+  "version": "1.0.0",
   "author": {
     "name": "trimentor",
     "url": "https://github.com/trimentor"
