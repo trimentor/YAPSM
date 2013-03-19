@@ -1,8 +1,9 @@
 /*!
- * jquery.YAPSM.js
+ * jQuery YAPSM Plugin v1.0.0
  *
- * Copyright 2012, Kjel Delaey (https://github.com/trimentor/YAPSM)
- * https://github.com/trimentor/YAPSM/blob/master/LICENSE
+ * Copyright 2011, 2013 Kjel Delaey
+ * Released under the MIT license
+ * https://raw.github.com/trimentor/YAPSM/master/LICENSE
  */
 (function ($) {
     $.extend($.fn, {
