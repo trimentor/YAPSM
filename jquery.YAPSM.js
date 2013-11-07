@@ -1,5 +1,5 @@
 /*!
- * jQuery YAPSM Plugin v1.0.0
+ * jQuery YAPSM Plugin v1.0.1
  *
  * Copyright 2011, 2013 Kjel Delaey
  * Released under the MIT license
@@ -12,7 +12,8 @@
             passwordStrengthMeter = new $.yapsm(options);
 
             calculatePasswordComplexity = function () {
-                this.complexity = passwordStrengthMeter.strength(this.value);
+                var password = this.value;
+                this.complexity = password.length ? passwordStrengthMeter.strength(password) : "";
             };
             $(this).keyup(calculatePasswordComplexity);
             return this;
@@ -88,10 +89,10 @@
             },
 
             strength: function (password) {
-                var dictionaryWord, bits;
+                var dictionaryWord, bitsOfEntropy;
                 dictionaryWord = this.commonWord(password);
-                bits = !dictionaryWord ? this.passwordStrength(password) : null;
-                return this.strengthClass(bits);
+                bitsOfEntropy = !dictionaryWord ? this.passwordStrength(password) : null;
+                return this.strengthClass(bitsOfEntropy);
             },
 
             charSetEntropy: function (charSet) {
@@ -99,8 +100,10 @@
             },
 
             passwordStrength: function (password) {
-                var charSet = this.numberOfPossibleSymbols(password);
-                return this.charSetEntropy(charSet) * password.length;
+                var charSet, bitsOfEntropy;
+                charSet = this.numberOfPossibleSymbols(password);
+                bitsOfEntropy = this.charSetEntropy(charSet) * password.length;
+                return Math.floor(bitsOfEntropy);
             },
 
             commonWord: function (password) {
@@ -136,7 +139,7 @@
                         inclLowerCase = true;
                         score += this.entropyMap.mixedCaseLettersOnly.count;
                     }
-                    if (typeof inclOther === "undefined" && "`~-_=+[{]}\\|;:'\",<.>/?!@#$%^&*()".indexOf(character) >= 0) {
+                    if (typeof inclOther === "undefined" && /\W/.test(character)) {
                         inclOther = true;
                         score += this.entropyMap.otherCharacters.count;
                     }
@@ -144,22 +147,22 @@
                 return score;
             },
 
-            strengthClass: function (bits) {
+            strengthClass: function (bitsOfEntropy) {
                 var cssClass;
 
-                if (bits === null) {
+                if (bitsOfEntropy === null) {
                     cssClass = this.settings.commonWordClass;
                 } else {
-                    if (bits >= 28 && bits <= 35) {
-                        cssClass = this.settings.fairClass;
-                    } else if (bits >= 36 && bits <= 59) {
-                        cssClass = this.settings.goodClass;
-                    } else if (bits >= 60 && bits <= 127) {
-                        cssClass = this.settings.strongClass;
-                    } else if (bits >= 128) {
-                        cssClass = this.settings.veryStrongClass;
-                    } else {
+                    if (bitsOfEntropy <= 27) {
                         cssClass = this.settings.weakClass;
+                    } else if (bitsOfEntropy >= 28 && bitsOfEntropy <= 35) {
+                        cssClass = this.settings.fairClass;
+                    } else if (bitsOfEntropy >= 36 && bitsOfEntropy <= 59) {
+                        cssClass = this.settings.goodClass;
+                    } else if (bitsOfEntropy >= 60 && bitsOfEntropy <= 127) {
+                        cssClass = this.settings.strongClass;
+                    } else if (bitsOfEntropy > 128) {
+                        cssClass = this.settings.veryStrongClass;
                     }
                 }
                 return cssClass;
